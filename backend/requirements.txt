@@ -4,3 +4,4 @@ pyodbc
 python-dotenv
 werkzeug
 flask-cors
+gunicorn
