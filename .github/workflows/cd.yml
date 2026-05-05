@@ -1,0 +1,44 @@
+name: CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 🔹 Frontend build
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm install
+
+      - name: Build frontend
+        working-directory: ./frontend
+        run: npm run build
+
+      # 🔹 Backend setup (no run, no test)
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install backend dependencies
+        working-directory: ./backend
+        run: |
+          pip install --upgrade pip
+          pip install flask flask_sqlalchemy pyodbc python-dotenv werkzeug flask-cors
+
+      # 🚀 Placeholder deploy step
+      - name: Deploy
+        run: echo "Ready for deployment (no tests executed)"
