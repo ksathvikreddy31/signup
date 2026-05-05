@@ -46,9 +46,10 @@ name: CD Pipeline
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
 
 jobs:
+
   deploy-backend:
     runs-on: ubuntu-latest
     steps:
@@ -60,13 +61,15 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install backend dependencies
         working-directory: ./backend
-        run: pip install -r requirements.txt
+        run: |
+          pip install --upgrade pip
+          pip install flask flask_sqlalchemy pyodbc python-dotenv werkzeug flask-cors gunicorn
 
-      - name: Deploy to Azure Web App
+      - name: Deploy Backend to Azure
         uses: azure/webapps-deploy@v3
         with:
-          app-name: YOUR_APP_NAME        # ← replace with your Azure app name
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: ./backend             # ← deploy only backend folder
+          app-name: signupwebapp
+          publish-profile: ${{ secrets.AZURE_BACKEND_PUBLISH_PROFILE }}
+          package: ./backend
