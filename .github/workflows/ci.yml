@@ -143,7 +143,6 @@
 #         run: python app.py &
 #         env:
 #           FLASK_ENV: development
-
 name: CI Pipeline
 
 on:
