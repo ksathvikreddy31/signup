@@ -44,5 +44,5 @@ jobs:
       - name: Install dependencies
         working-directory: ./backend
         run: |
-          pip install --upgrade pip
+          # pip install --upgrade pip
           pip install flask flask_sqlalchemy pyodbc python-dotenv werkzeug flask-cors
