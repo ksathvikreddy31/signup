@@ -49,6 +49,7 @@ on:
     branches: [ main ]
 
 jobs:
+
   deploy-backend:
     runs-on: ubuntu-latest
     steps:
@@ -64,11 +65,11 @@ jobs:
         working-directory: ./backend
         run: |
           pip install --upgrade pip
-          pip install flask flask_sqlalchemy pyodbc python-dotenv werkzeug flask-cors gunicorn
+          pip install -r requirements.txt
 
       - name: Deploy Backend to Azure
         uses: azure/webapps-deploy@v3
         with:
-          app-name: signupwebapp
-          publish-profile: ${{ secrets.AZURE_BACKEND_PUBLISH_PROFILE }}
+          app-name: ${{ secrets.AZURE_APP_NAME }}
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
           package: ./backend
